@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JavaScript Promises</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2ff;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 25px;
+            max-width: 450px;
+            margin: auto;
+            border-radius: 12px;
+        }
+
+        button {
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            white-space: pre-line;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Promise Example</h2>
+
+        <p>Click the button to fetch student details.</p>
+
+        <button onclick="getStudent()">Get Student Details</button>
+
+        <p id="result">Waiting for your action...</p>
+    </div>
+
+    <script>
+        // Create a Promise
+        function fetchStudent() {
+            return new Promise((resolve, reject) => {
+
+                document.getElementById("result").textContent =
+                    "Loading student details...";
+
+                setTimeout(() => {
+                    let success = true;
+
+                    if (success) {
+                        resolve({
+                            name: "Ravi",
+                            age: 15,
+                            course: "JavaScript"
+                        });
+                    } else {
+                        reject("Unable to fetch student details.");
+                    }
+
+                }, 2000);
+            });
+        }
+
+        // Handle the Promise
+        function getStudent() {
+            fetchStudent()
+                .then(student => {
+                    document.getElementById("result").style.color = "green";
+
+                    document.getElementById("result").textContent =
+                        "Name: " + student.name +
+                        "\nAge: " + student.age +
+                        "\nCourse: " + student.course;
+                })
+                .catch(error => {
+                    document.getElementById("result").style.color = "red";
+                    document.getElementById("result").textContent =
+                        "Error: " + error;
+                })
+                .finally(() => {
+                    console.log("Request completed.");
+                });
+        }
+    </script>
+
+</body>
+
+</html>
